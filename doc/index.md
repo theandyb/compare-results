@@ -50,7 +50,7 @@ For each mutation type, we run `src/compare_coef.py n` (n = 0, 1, 2, 3, 4, or 5)
 
 |Motif|Var|BetaDiff|SignBeta|PDiff|
 |:---:|:-:|:------:|:------:|:---:|
-|AT\_CG\_AACACGC|(Intercept)|0.05011159999999926|True|5.348999999999999e-05|
+|AT\_CG\_AACACGC|(Intercept)|0.05011159999999926|1|5.348999999999999e-05|
 
 Where SignBeta = true if the signs of the coefficients are the same
 
