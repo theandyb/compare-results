@@ -37,3 +37,9 @@ Each of the six mutation types (AT\_CG, AT\_GC, AT\_TA, GC\_AT, GC\_CG, GC\_TA) 
 
 
 # Method
+
+## Statistics that might be useful to capture
+
+1. Difference in the beta values for each parameter
+2. Does direction of statistic match?
+3. Difference between pvalues
