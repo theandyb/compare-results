@@ -38,7 +38,7 @@ def main(argv):
         res = pd.DataFrame({'Motif': motif, 
             'Var': andy_df.Cov, 
             'BetaDiff': andy_df.Estimate - jed_df.Estimate, 
-            'SignBeta': np.sign(andy_df.Estimate) == np.sign(jed_df.Estimate), 
+            'SignBeta': int(np.sign(andy_df.Estimate) == np.sign(jed_df.Estimate)), 
             'PDiff': andy_df.pval - jed_df.pval})
         with open(outfile, 'a') as f:
             res.to_csv(f, header = False, index = False)
