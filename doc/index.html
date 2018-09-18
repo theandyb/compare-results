@@ -1,32 +1,150 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Andy Beck" />
   <title>Compare-Results</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
-  </style>
-  <link rel="stylesheet" href="pandoc.css" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="pandoc.css" type="text/css" />
 </head>
 <body>
-<header>
+<div id="header">
 <h1 class="title">Compare-Results</h1>
-<p class="author">Andy Beck</p>
-</header>
+<h2 class="author">Andy Beck</h2>
+</div>
 <h1 id="abstract">Abstract</h1>
 <h1 id="introduction">Introduction</h1>
-<p>The goal of this (mini) project is to compare the results from running the <a href="http://github.com/carjed/smaug-genetics">smaug-genetics</a> pipeline on the same dataset. Numerical differences were observed in some of the outputs, and this likely resulted from the github repository being put together after all the analyses had been run initially (likely multiple times per step and not necessarily in the order described in the repository’s documentation).</p>
+<p>The goal of this (mini) project is to compare the results from running the <a href="http://github.com/carjed/smaug-genetics">smaug-genetics</a> pipeline on the same dataset. Numerical differences were observed in some of the outputs, and this likely resulted from the github repository being put together after all the analyses had been run initially (likely multiple times per step and not necessarily in the order described in the repository's documentation).</p>
 <p>Here in this analysis, we compare the results of the logistic regression models used to predict the mutation rates for each 7-mer mutation type, conditioned on 14 genomic features (for more details, see the paper <a href="https://www.nature.com/articles/s41467-018-05936-5">Extremely rare variants reveal patterns of germline mutation rate heterogeneity in humans</a>.</p>
 <h1 id="data">Data</h1>
+<p>Each of the six mutation types (AT_CG, AT_GC, AT_TA, GC_AT, GC_CG, GC_TA) has its own subdirectory in <code>output\logmod_data\coefs</code>. Inside each mutation type directory are 4096 files, each corresponding to one 7-mer with the mutation type at the center. Each of these files contains the following table (with no header row:)</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Covariate</th>
+<th align="center">Estimate</th>
+<th align="center">SE</th>
+<th align="center">Z</th>
+<th align="center">pval</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">(Intercept)</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+<tr class="even">
+<td align="center">DP</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+<tr class="odd">
+<td align="center">H3K4me1</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+<tr class="even">
+<td align="center">H3K4me3</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+<tr class="odd">
+<td align="center">H3K9ac</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+<tr class="even">
+<td align="center">H3K9me3</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+<tr class="odd">
+<td align="center">H3K27ac</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+<tr class="even">
+<td align="center">H3K27me3</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+<tr class="odd">
+<td align="center">H3K36me3</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+<tr class="even">
+<td align="center">EXON</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+<tr class="odd">
+<td align="center">CpGI</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+<tr class="even">
+<td align="center">RR</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+<tr class="odd">
+<td align="center">LAMIN</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+<tr class="even">
+<td align="center">DHS</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+<tr class="odd">
+<td align="center">TIME</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+<tr class="even">
+<td align="center">GC</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
+</tr>
+</tbody>
+</table>
 <h1 id="method">Method</h1>
 </body>
 </html>
