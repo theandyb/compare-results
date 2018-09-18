@@ -41,7 +41,7 @@ def main(argv):
             'SignBeta': np.sign(andy_df.Estimate) == np.sign(jed_df.Estimate), 
             'PDiff': andy_df.pval - jed_df.pval})
         with open(outfile, 'a') as f:
-            res.to_csv(f, header=False)
+            res.to_csv(f, header = False, index = False)
     return(0)
 
 if __name__ == "__main__":
