@@ -62,4 +62,14 @@ for x in AT_CG.csv AT_GC.csv AT_TA.csv GC_AT.csv GC_CG.csv GC_TA.csv; do cat $x 
 grep '(Intercept)' >> Intercept.csv; done
 ```
 
-Do the above for DP, H3K4me1, H3K4me3, H3K9ac, H3K9me3, H3K27ac, H3K27me3, H3K36me3, EXON, CpGI, RR, LAMIN, DHS, TIME, GC 
+Or we can do it all in one script:
+
+```bash
+#!/usr/bin/zsh
+for y in $(tail -n +2 output/AT_CG.csv | cut -f2 -d "," | sort | uniq); do
+	head -1 output/AT_CG.csv > output/feature_specific/${${y:gs/\(/}:gs/\)/}.csv
+	for x in output/[A,G]*; do
+		cat $x | grep $y >> "output/feature_specific/${${y:gs/\(/}:gs/\)/}.csv"
+	done
+done
+```
