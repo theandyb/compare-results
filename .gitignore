@@ -1,2 +1,2 @@
 .snakemake/
-output/
+output/*.csv
