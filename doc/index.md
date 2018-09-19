@@ -54,3 +54,12 @@ For each mutation type, we run `src/compare_coef.py n` (n = 0, 1, 2, 3, 4, or 5)
 
 Where SignBeta = true if the signs of the coefficients are the same
 
+I then generated files for each covariate (and the intercept) using similar shell commands as the following:
+
+```bash
+head -1 AT_CG.csv > Intercept.csv
+for x in AT_CG.csv AT_GC.csv AT_TA.csv GC_AT.csv GC_CG.csv GC_TA.csv; do cat $x | \
+grep '(Intercept)' >> Intercept.csv; done
+```
+
+Do the above for DP, H3K4me1, H3K4me3, H3K9ac, H3K9me3, H3K27ac, H3K27me3, H3K36me3, EXON, CpGI, RR, LAMIN, DHS, TIME, GC 
