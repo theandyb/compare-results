@@ -1,161 +1,190 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Andy Beck" />
   <title>Compare-Results</title>
+  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
   </style>
-  <link rel="stylesheet" href="pandoc.css" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <link rel="stylesheet" href="pandoc.css" type="text/css" />
 </head>
 <body>
-<header>
+<div id="header">
 <h1 class="title">Compare-Results</h1>
-<p class="author">Andy Beck</p>
-</header>
+<h2 class="author">Andy Beck</h2>
+</div>
 <h1 id="abstract">Abstract</h1>
 <h1 id="introduction">Introduction</h1>
-<p>The goal of this (mini) project is to compare the results from running the <a href="http://github.com/carjed/smaug-genetics">smaug-genetics</a> pipeline on the same dataset. Numerical differences were observed in some of the outputs, and this likely resulted from the github repository being put together after all the analyses had been run initially (likely multiple times per step and not necessarily in the order described in the repository’s documentation).</p>
+<p>The goal of this (mini) project is to compare the results from running the <a href="http://github.com/carjed/smaug-genetics">smaug-genetics</a> pipeline on the same dataset. Numerical differences were observed in some of the outputs, and this likely resulted from the github repository being put together after all the analyses had been run initially (likely multiple times per step and not necessarily in the order described in the repository's documentation).</p>
 <p>Here in this analysis, we compare the results of the logistic regression models used to predict the mutation rates for each 7-mer mutation type, conditioned on 14 genomic features (for more details, see the paper <a href="https://www.nature.com/articles/s41467-018-05936-5">Extremely rare variants reveal patterns of germline mutation rate heterogeneity in humans</a>.</p>
 <h1 id="data">Data</h1>
 <p>Each of the six mutation types (AT_CG, AT_GC, AT_TA, GC_AT, GC_CG, GC_TA) has its own subdirectory in <code>output\logmod_data\coefs</code>. Inside each mutation type directory are 4096 files, each corresponding to one 7-mer with the mutation type at the center. Each of these files contains the following table (with no header row:)</p>
 <table>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Covariate</th>
-<th style="text-align: center;">Estimate</th>
-<th style="text-align: center;">SE</th>
-<th style="text-align: center;">Z</th>
-<th style="text-align: center;">pval</th>
+<th align="center">Covariate</th>
+<th align="center">Estimate</th>
+<th align="center">SE</th>
+<th align="center">Z</th>
+<th align="center">pval</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">(Intercept)</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">(Intercept)</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">DP</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">DP</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">H3K4me1</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">H3K4me1</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">H3K4me3</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">H3K4me3</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">H3K9ac</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">H3K9ac</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">H3K9me3</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">H3K9me3</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">H3K27ac</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">H3K27ac</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">H3K27me3</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">H3K27me3</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">H3K36me3</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">H3K36me3</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">EXON</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">EXON</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">CpGI</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">CpGI</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">RR</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">RR</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">LAMIN</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">LAMIN</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">DHS</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">DHS</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">TIME</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">TIME</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">GC</td>
-<td style="text-align: center;"><em>est</em></td>
-<td style="text-align: center;"><em>SE</em></td>
-<td style="text-align: center;"><em>Z</em></td>
-<td style="text-align: center;"><em>p</em></td>
+<td align="center">GC</td>
+<td align="center"><em>est</em></td>
+<td align="center"><em>SE</em></td>
+<td align="center"><em>Z</em></td>
+<td align="center"><em>p</em></td>
 </tr>
 </tbody>
 </table>
 <h1 id="method">Method</h1>
 <h2 id="statistics-that-might-be-useful-to-capture">Statistics that might be useful to capture</h2>
-<ol type="1">
+<ol style="list-style-type: decimal">
 <li>Difference in the beta values for each parameter</li>
 <li>Does direction of statistic match?</li>
 <li>Difference between pvalues</li>
@@ -165,23 +194,35 @@
 <table>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Motif</th>
-<th style="text-align: center;">Var</th>
-<th style="text-align: center;">BetaDiff</th>
-<th style="text-align: center;">SignBeta</th>
-<th style="text-align: center;">PDiff</th>
+<th align="center">Motif</th>
+<th align="center">Var</th>
+<th align="center">BetaDiff</th>
+<th align="center">SignBeta</th>
+<th align="center">PDiff</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">AT_CG_AACACGC</td>
-<td style="text-align: center;">(Intercept)</td>
-<td style="text-align: center;">0.05011159999999926</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">5.348999999999999e-05</td>
+<td align="center">AT_CG_AACACGC</td>
+<td align="center">(Intercept)</td>
+<td align="center">0.05011159999999926</td>
+<td align="center">1</td>
+<td align="center">5.348999999999999e-05</td>
 </tr>
 </tbody>
 </table>
 <p>Where SignBeta = true if the signs of the coefficients are the same</p>
+<p>I then generated files for each covariate (and the intercept) using similar shell commands as the following:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">head</span> -1 AT_CG.csv <span class="kw">&gt;</span> Intercept.csv
+<span class="kw">for</span> <span class="kw">x</span> in AT_CG.csv AT_GC.csv AT_TA.csv GC_AT.csv GC_CG.csv GC_TA.csv<span class="kw">;</span> <span class="kw">do</span> <span class="kw">cat</span> <span class="ot">$x</span> <span class="kw">|</span> <span class="kw">\</span>
+<span class="kw">grep</span> <span class="st">&#39;(Intercept)&#39;</span> <span class="kw">&gt;&gt;</span> Intercept.csv<span class="kw">;</span> <span class="kw">done</span></code></pre></div>
+<p>Or we can do it all in one script:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/usr/bin/zsh</span>
+<span class="kw">for</span> <span class="kw">y</span> in <span class="ot">$(</span><span class="kw">tail</span> -n +2 output/AT_CG.csv <span class="kw">|</span> <span class="kw">cut</span> -f2 -d <span class="st">&quot;,&quot;</span> <span class="kw">|</span> <span class="kw">sort</span> <span class="kw">|</span> <span class="kw">uniq</span><span class="ot">)</span><span class="kw">;</span> <span class="kw">do</span>
+    <span class="kw">head</span> -1 output/AT_CG.csv <span class="kw">&gt;</span> output/feature_specific/$<span class="dt">{${y:gs/\(/}:gs/\)/}</span>.csv
+    <span class="kw">for</span> <span class="kw">x</span> in output/[A,G]*<span class="kw">;</span> <span class="kw">do</span>
+        <span class="kw">cat</span> <span class="ot">$x</span> <span class="kw">|</span> <span class="kw">grep</span> <span class="ot">$y</span> <span class="kw">&gt;&gt;</span> <span class="st">&quot;output/feature_specific/${</span><span class="ot">${y:gs</span><span class="er">/\(/</span><span class="ot">}</span><span class="st">:gs/\)/}.csv&quot;</span>
+    <span class="kw">done</span>
+<span class="kw">done</span></code></pre></div>
 </body>
 </html>

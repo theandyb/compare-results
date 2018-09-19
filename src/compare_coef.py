@@ -39,11 +39,11 @@ def main(argv):
             'Var': andy_df.Cov, 
             'BetaDiff': andy_df.Estimate - jed_df.Estimate, 
             'SignBeta': np.sign(andy_df.Estimate) == np.sign(jed_df.Estimate), 
-            'PDiff': andy_df.pval - jed_df.pval}),
+            'PDiff': andy_df.pval - jed_df.pval,
             'ABeta': andy_df.Estimate,
             'jBeta': jed_df.Estimate,
             'AP':andy_df.pval,
-            'JP':jed_df.pval
+            'JP':jed_df.pval})
         res.SignBeta = res.SignBeta.astype(int)
         with open(outfile, 'a') as f:
             res.to_csv(f, header = False, index = False)
