@@ -23,7 +23,7 @@ def main(argv):
     outfile = "/net/snowwhite/home/beckandy/research/compare_results/output/" + mut_dir + ".csv"
     if not isfile(outfile):
         with open(outfile,'w+') as f:
-            f.write("Motif, Var, BetaDiff, SignBeta, PDiff\n")
+            f.write("Motif, Var, BetaDiff, SignBeta, PDiff, ABeta, jBeta, AP, JP\n")
 
     coef_files = [f for f in listdir(andy_dir) if isfile(join(andy_dir, f))]
 
