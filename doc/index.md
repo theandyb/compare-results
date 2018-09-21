@@ -79,4 +79,9 @@ For the most part, the differences between the betas appear to be distributed ar
 ## Tracking where in the pipeline differences occured
 
 1. Acquisition and Processing of Reference Data
-    * Human genome lengths
+    * Human genome lengths `hg19.genome`
+    * GC content in 10kb windows `gc10kb.bed`
+      * Mine has more columns -> compare the ones we have in common?
+    * Fixed width windows `genome.{size}.sorted.bed`
+2. VCF files -> **exactly the same**
+3. singletons -> **exactly the same**
