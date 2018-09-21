@@ -230,12 +230,29 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Acquisition and Processing of Reference Data
 <ul>
 <li>Human genome lengths <code>hg19.genome</code></li>
+<li>Mine was missing a header, but this only would have mattered had the neg_bin model been run</li>
 <li>GC content in 10kb windows <code>gc10kb.bed</code></li>
 <li>Mine has more columns -&gt; compare the ones we have in common?</li>
 <li>Fixed width windows <code>genome.{size}.sorted.bed</code></li>
+<li><strong>exactly the same</strong></li>
 </ul></li>
 <li>VCF files -&gt; <strong>exactly the same</strong></li>
 <li>singletons -&gt; <strong>exactly the same</strong></li>
+</ol>
+<h3 id="gc-content-in-10kb-windows">GC content in 10kb windows</h3>
+<h4 id="grab-column-from-my-file">Grab column from my file</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cat</span> gc10kb.bed <span class="kw">|</span> <span class="kw">sed</span> -n <span class="st">&#39;1!p&#39;</span> <span class="kw">|</span>  <span class="kw">cut</span> -f2-4  <span class="kw">&gt;</span> ~/research/compare_results/gc10kb_andy.bed</code></pre></div>
+<h4 id="grab-column-from-jeds">Grab column from Jed's</h4>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cat</span> gc10kb.bed <span class="kw">|</span> <span class="kw">cut</span> -f2-4  <span class="kw">&gt;</span> ~/research/compare_results/gc10kb_jed.bed</code></pre></div>
+<h4 id="compare-in-r">Compare in R</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+andy &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;gc10kb_andy.bed&quot;</span>, <span class="dt">col_names=</span><span class="kw">c</span>(<span class="st">&quot;start&quot;</span>,<span class="st">&quot;end&quot;</span>,<span class="st">&quot;gc&quot;</span>))
+jed &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;gc10kb_jed.bed&quot;</span>, <span class="dt">col_names=</span><span class="kw">c</span>(<span class="st">&quot;start&quot;</span>,<span class="st">&quot;end&quot;</span>,<span class="st">&quot;gc&quot;</span>))</code></pre></div>
+<p><strong>Answer:</strong> my file contains %AT content in the column Jed's code assumes contains GC (D'oh!)</p>
+<p>Models should be re-run, but only impact should be a change in sign of the beta values for gc content.</p>
+<h3 id="step-by-step-through-the-analysis-again...">Step-by-step through the analysis (<em>again...</em>)</h3>
+<ol style="list-style-type: decimal">
+<li>Read and pre-process the data (getData from smaug library)</li>
 </ol>
 </body>
 </html>
