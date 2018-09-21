@@ -73,3 +73,11 @@ for y in $(tail -n +2 output/AT_CG.csv | cut -f2 -d "," | sort | uniq); do
 	done
 done
 ```
+
+For the most part, the differences between the betas appear to be distributed around 0, though there are some examples of large differences between the beta values.
+
+## Tracking where in the pipeline differences occured
+
+1. Acquisition and Processing of Reference Data
+   * Human genome lengths
+   
