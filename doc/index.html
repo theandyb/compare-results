@@ -224,5 +224,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
         <span class="kw">cat</span> <span class="ot">$x</span> <span class="kw">|</span> <span class="kw">grep</span> <span class="ot">$y</span> <span class="kw">&gt;&gt;</span> <span class="st">&quot;output/feature_specific/${</span><span class="ot">${y:gs</span><span class="er">/\(/</span><span class="ot">}</span><span class="st">:gs/\)/}.csv&quot;</span>
     <span class="kw">done</span>
 <span class="kw">done</span></code></pre></div>
+<p>For the most part, the differences between the betas appear to be distributed around 0, though there are some examples of large differences between the beta values.</p>
+<h2 id="tracking-where-in-the-pipeline-differences-occured">Tracking where in the pipeline differences occured</h2>
+<ol style="list-style-type: decimal">
+<li>Acquisition and Processing of Reference Data
+<ul>
+<li>Human genome lengths <code>hg19.genome</code></li>
+<li>GC content in 10kb windows <code>gc10kb.bed</code></li>
+<li>Mine has more columns -&gt; compare the ones we have in common?</li>
+<li>Fixed width windows <code>genome.{size}.sorted.bed</code></li>
+</ul></li>
+<li>VCF files -&gt; <strong>exactly the same</strong></li>
+<li>singletons -&gt; <strong>exactly the same</strong></li>
+</ol>
 </body>
 </html>

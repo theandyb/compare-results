@@ -1,2 +1,3 @@
 .snakemake/
 output/
+gc10kb*
