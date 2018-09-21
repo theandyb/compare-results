@@ -112,4 +112,5 @@ jed <- read_tsv("gc10kb_jed.bed", col_names=c("start","end","gc"))
 Models should be re-run, but only impact should be a change in sign of the beta values for gc content.
 
 ### Step-by-step through the analysis (*again...*)
-1. Read and pre-process the data (getData from smaug library)
+1. Read and pre-process the data (`getData` from smaug library)
+    * This produces bins, mct, and sites. How do these compare between the two? (ideally: not at all) 
