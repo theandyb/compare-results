@@ -79,4 +79,4 @@ For the most part, the differences between the betas appear to be distributed ar
 ## Tracking where in the pipeline differences occured
 
 1. Acquisition and Processing of Reference Data
-  * Human genome lengths
+    * Human genome lengths
