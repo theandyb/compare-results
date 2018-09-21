@@ -80,8 +80,33 @@ For the most part, the differences between the betas appear to be distributed ar
 
 1. Acquisition and Processing of Reference Data
     * Human genome lengths `hg19.genome`
+      * Mine was missing a header, but this only would have mattered had the neg\_bin model been run 
     * GC content in 10kb windows `gc10kb.bed`
       * Mine has more columns -> compare the ones we have in common?
     * Fixed width windows `genome.{size}.sorted.bed`
+      * **exactly the same**
 2. VCF files -> **exactly the same**
 3. singletons -> **exactly the same**
+
+### GC content in 10kb windows
+
+#### Grab column from my file
+```bash
+cat gc10kb.bed | sed -n '1!p' |  cut -f2-4  > ~/research/compare_results/gc10kb_andy.bed
+```
+
+#### Grab column from Jed's
+```bash
+cat gc10kb.bed | cut -f2-4  > ~/research/compare_results/gc10kb_jed.bed
+```
+
+#### Compare in R
+```r
+library(tidyverse)
+andy <- read_tsv("gc10kb_andy.bed", col_names=c("start","end","gc"))
+jed <- read_tsv("gc10kb_jed.bed", col_names=c("start","end","gc"))
+```
+
+**Answer:** my file contains %AT content in the column Jed's code assumes contains GC (D'oh!)
+
+Models should be re-run, but only impact should be a change in sign of the beta values for gc content.
