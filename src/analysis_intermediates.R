@@ -34,6 +34,6 @@ bindir <- paste0(parent.dir, "/motif_counts/", nbp, "-mers/full")
 analysisdir <- parent.dir
 full_data <- getData(summfile, singfile, bindir)
 # Save intermediate results to files
-saveRDS(full_data$sites, file = paste0("intermediate/",args[1],".sites.rds")
-saveRDS(full_data$bins, file = paste0("intermediate/",args[1],".bins.rds")
-saveRDS(full_data$mct, file = paste0("intermediate/",args[1],".mct.rds")
+saveRDS(full_data$sites, file = paste0("intermediate/",args[1],".sites.rds"))
+saveRDS(full_data$bins, file = paste0("intermediate/",args[1],".bins.rds"))
+saveRDS(full_data$mct, file = paste0("intermediate/",args[1],".mct.rds"))
