@@ -2,6 +2,8 @@ require(devtools)
 install_github('theandyb/smaug', quiet=TRUE)
 require(smaug)
 
+args = commandArgs(trailingOnly=TRUE)
+
 packages <- c("tidyverse", "broom", "RColorBrewer", "MASS", "boot", "speedglm",
                 "psych", "lmtest", "fmsb", "hexbin", "cowplot", "grid", "gtable", "gridExtra",
                         "yaml", "openxlsx", "Biostrings", "svglite", "NMF", "emdbook")
@@ -16,32 +18,22 @@ nbp <- adj*2+1
 data <- "full"
 mac <- "singletons"
 
-andy <- list(parent.dir = "/net/snowwhite/home/beckandy/research/smaug-redux")
-jed <- list(parent.dir = "/net/bipolar/jedidiah/mutation")
+if(args[1] == "andy"){
+        parent.dir <- "/net/snowwhite/home/beckandy/research/smaug-redux"
+} else {
+        parent.dir <- "/net/bipolar/jedidiah/mutation"
+}
 
-andy$datadir <- paste0(andy$parent.dir, "/output/", nbp, "bp_", bink, "k_singletons_", data)
-andy$summfile <- paste0(andy$parent.dir, "/summaries/", mac, ".", data, ".summary")
-andy$singfile <- paste0(andy$parent.dir, "/singletons/full.singletons")
-andy$bindir <- paste0(andy$parent.dir, "/motif_counts/", nbp, "-mers/full")
-
-jed$datadir <- paste0(jed$parent.dir, "/output/", nbp, "bp_", bink, "k_singletons_", data)
-jed$summfile <- paste0(jed$parent.dir, "/summaries/", mac, ".", data, ".summary")
-jed$singfile <- paste0(jed$parent.dir, "/singletons/full.singletons")
-jed$bindir <- paste0(jed$parent.dir, "/motif_counts/", nbp, "-mers/full")
+datadir <- paste0(parent.dir, "/output/", nbp, "bp_", bink, "k_singletons_", data)
+summfile <- paste0(parent.dir, "/summaries/", mac, ".", data, ".summary")
+singfile <- paste0(parent.dir, "/singletons/full.singletons")
+bindir <- paste0(parent.dir, "/motif_counts/", nbp, "-mers/full")
 
 
 ## Step 1: read and pre-process data
-analysisdir <- andy$parent.dir
-andy$full_data <- getData(andy$summfile, andy$singfile, andy$bindir)
+analysisdir <- parent.dir
+full_data <- getData(summfile, singfile, bindir)
 # Save intermediate results to files
-saveRDS(andy$full_data$sites, file = "intermediate/andy.sites.rds")
-saveRDS(andy$full_data$bins, file = "intermediate/andy.bins.rds")
-saveRDS(andy$full_data$mct, file = "intermediate/andy.mct.rds")
-andy$full_data <- NULL
-
-analysisdir <- jed$parent.dir
-jed$full_data <- getData(jed$summfile, jed$singfile, jed$bindir)
-saveRDS(jed$full_data$sites, file = "intermediate/jed.sites.rds")
-saveRDS(jed$full_data$bins, file = "intermediate/jed.bins.rds")
-saveRDS(jed$full_data$mct, file = "intermediate/jed.mct.rds")
-jed$full_data <- NULL
+saveRDS(full_data$sites, file = paste0("intermediate/",args[1],".sites.rds")
+saveRDS(full_data$bins, file = paste0("intermediate/",args[1],".bins.rds")
+saveRDS(full_data$mct, file = paste0("intermediate/",args[1],".mct.rds")
